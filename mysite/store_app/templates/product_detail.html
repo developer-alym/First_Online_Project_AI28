@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{products.product_name}}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.3em;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .product-detail {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .product-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            color: white;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .product-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .product-content {
+            padding: 40px;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 400px;
+            background: #f5f5f5;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-placeholder {
+            color: #999;
+            font-size: 3em;
+        }
+
+        .info-section {
+            margin-bottom: 30px;
+        }
+
+        .info-label {
+            font-size: 0.85em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 1.1em;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .price {
+            font-size: 2.5em;
+            color: #667eea;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .price::after {
+            content: ' сом';
+            font-size: 0.6em;
+            color: #888;
+        }
+
+        .description {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-update {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-update:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-delete {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #da190b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .product-title {
+                font-size: 1.8em;
+            }
+
+            .product-content {
+                padding: 25px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .image-container {
+                height: 300px;
+            }
+
+            .price {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'product_list' %}" class="back-link">Назад к списку</a>
+
+        <div class="product-detail">
+            <div class="product-header">
+                <span class="category-badge">{{products.category}}</span>
+                <h1 class="product-title">{{products.product_name}}</h1>
+            </div>
+
+            <div class="product-content">
+                <div class="image-container">
+                    {% if products.image %}
+                        <img src="{{products.image.url}}" alt="{{products.product_name}}">
+                    {% else %}
+                        <span class="image-placeholder">📷</span>
+                    {% endif %}
+                </div>
+
+                <div class="info-section">
+                    <div class="info-label">Описание</div>
+                    <div class="description">
+                        <div class="info-value">{{products.description}}</div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-label">Цена</div>
+                    <div class="price">{{products.price}}</div>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="{% url 'product_update' products.pk %}" class="btn btn-update">
+                        ✏️ Редактировать
+                    </a>
+                    <a href="{% url 'product_delete' products.pk %}" class="btn btn-delete">
+                        🗑️ Удалить
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
