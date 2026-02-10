@@ -1,4 +1,3 @@
-
 1. pip install django
 2. django-admin startproject mysite
 3. cd mysite
@@ -14,4 +13,7 @@
 10. views.py
 11. templates -> list / detail / delete / update - .html
 11. urls.py
+
+
+
 

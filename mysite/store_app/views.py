@@ -17,7 +17,7 @@ class ProductListViewSet(ListView):
 class ProductDetailViewSet(DetailView):
     queryset = Product.objects.all()
     context_object_name = 'products'
-    template_name = 'product_detail.html'
+    template_name = 'product_detai  l.html'
 
 class ProductCreateViewSet(CreateView):
     form_class = ProductForm
